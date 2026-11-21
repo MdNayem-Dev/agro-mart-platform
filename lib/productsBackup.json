@@ -1,0 +1,191 @@
+[
+  {
+    "id": 12,
+    "name": "৩ লিটার দুধ দোহন মেশিন || 3 Liter Manual Cow Milking Machine",
+    "slug": "3-liter-manual-cow-milking-machine-2",
+    "regular_price": 5000,
+    "price": 5000,
+    "sale_price": 4500,
+    "short_description": "৩ লিটার ফুডগ্রেড ম্যানুয়াল দুধ দোহন মেশিন। সহজে ব্যবহারযোগ্য ও টেকসই।",
+    "description": "৩ লিটার ফুডগ্রেড ম্যানুয়াল দুধ দোহন মেশিন। সহজে ব্যবহারযোগ্য ও টেকসই।",
+    "images": [{ "src": "https://api.smartagrosource.com/wp-content/uploads/2026/10/SmartAgroSource_Milking_Machine.png" }],
+    "categories": [{ "id": 3, "name": "ডেইরি ইকুইপমেন্ট" }],
+    "meta_data": [
+      { "key": "youtube_video_url", "value": "" },
+      { "key": "display_section", "value": "both" }
+    ],
+    "display_section": "both",
+    "is_popular": true,
+    "delivery_charge": 0,
+    "stock_status": "instock",
+    "stock_quantity": 10
+  },
+  {
+    "id": 11,
+    "name": "Ventry Nozell-1 Ince",
+    "slug": "ventry-nozell-1-ince",
+    "regular_price": 400,
+    "price": 400,
+    "sale_price": 340,
+    "short_description": "মৎস্য চাষে ব্যবহৃত ১ ইঞ্চি ভেন্টুরি নজেল।",
+    "description": "মৎস্য চাষে ব্যবহৃত ১ ইঞ্চি ভেন্টুরি নজেল। পানিতে অক্সিজেনের মাত্রা দ্রুত বাড়াতে অত্যন্ত কার্যকর।",
+    "images": [{ "src": "https://api.smartagrosource.com/wp-content/uploads/2026/10/SmartAgroSource_Ventry.png" }],
+    "categories": [{ "id": 5, "name": "মৎস্য সরঞ্জাম" }],
+    "meta_data": [
+      { "key": "youtube_video_url", "value": "" },
+      { "key": "display_section", "value": "both" }
+    ],
+    "display_section": "both",
+    "is_popular": false,
+    "delivery_charge": 0,
+    "stock_status": "instock",
+    "stock_quantity": 25
+  },
+  {
+    "id": 10,
+    "name": "Seedling Tray | সিডলিং ট্রে ৫০ গর্ত",
+    "slug": "seedling-tray-50-holes",
+    "regular_price": 70,
+    "price": 70,
+    "sale_price": 45,
+    "short_description": "উন্নত মানের প্লাস্টিক সিডলিং ট্রে ৫০ গর্ত। চারা উৎপাদনের জন্য আদর্শ।",
+    "description": "উন্নত মানের প্লাস্টিক সিডলিং ট্রে ৫০ গর্ত। চারা উৎপাদনের জন্য আদর্শ।",
+    "images": [{ "src": "https://api.smartagrosource.com/wp-content/uploads/2026/10/Seedling_Tray.png" }],
+    "categories": [{ "id": 7, "name": "কৃষি যন্ত্রাংশ" }],
+    "meta_data": [
+      { "key": "youtube_video_url", "value": "" },
+      { "key": "display_section", "value": "both" }
+    ],
+    "display_section": "both",
+    "is_popular": true,
+    "delivery_charge": 0,
+    "stock_status": "instock",
+    "stock_quantity": 100
+  },
+  {
+    "id": 9,
+    "name": "Cow Anti Kick Lock || গরুর লাথি বন্ধের কার্যকর সমাধান",
+    "slug": "cow-anti-kick-lock",
+    "regular_price": 1350,
+    "price": 1350,
+    "sale_price": 1250,
+    "short_description": "দুধ দোহনের সময় গরুর লাথি দেওয়ার সমস্যা বন্ধ করতে অত্যন্ত কার্যকর এন্টি কিক লক।",
+    "description": "দুধ দোহনের সময় গরুর লাথি দেওয়ার সমস্যা বন্ধ করতে অত্যন্ত কার্যকর এন্টি কিক লক। মজবুত স্টেইনলেস স্টিল দিয়ে তৈরি।",
+    "images": [{ "src": "https://api.smartagrosource.com/wp-content/uploads/2026/10/Anti_Kick.png" }],
+    "categories": [{ "id": 3, "name": "ডেইরি ইকুইপমেন্ট" }],
+    "meta_data": [
+      { "key": "youtube_video_url", "value": "" },
+      { "key": "display_section", "value": "both" }
+    ],
+    "display_section": "both",
+    "is_popular": true,
+    "delivery_charge": 0,
+    "stock_status": "instock",
+    "stock_quantity": 15
+  },
+  {
+    "id": 8,
+    "name": "২০ লিটার দুধ দোহন মেশিন (স্ট্যান্ড সহ) || 20 Liter milking machine (With Stand)",
+    "slug": "20-liter-milking-machine-with-stand",
+    "regular_price": 22500,
+    "price": 22500,
+    "sale_price": 22000,
+    "short_description": "২০ লিটার হেভি ডিউটি বৈদ্যুতিক ও স্ট্যান্ড সহ দুধ দোহন মেশিন।",
+    "description": "২০ লিটার হেভি ডিউটি বৈদ্যুতিক ও স্ট্যান্ড সহ দুধ দোহন মেশিন। বড় খামারিদের জন্য সর্বোচ্চ নির্ভরযোগ্য সমাধান।",
+    "images": [{ "src": "https://api.smartagrosource.com/wp-content/uploads/2026/10/Milking_20L.png" }],
+    "categories": [{ "id": 3, "name": "ডেইরি ইকুইপমেন্ট" }],
+    "meta_data": [
+      { "key": "youtube_video_url", "value": "" },
+      { "key": "display_section", "value": "both" }
+    ],
+    "display_section": "both",
+    "is_popular": true,
+    "delivery_charge": 0,
+    "stock_status": "instock",
+    "stock_quantity": 5
+  },
+  {
+    "id": 7,
+    "name": "১৫ লিটার দুধ দোহন মেশিন (স্ট্যান্ড সহ) || 15 Liter milking machine (With Stand)",
+    "slug": "15-liter-milking-machine-with-stand",
+    "regular_price": 20000,
+    "price": 20000,
+    "sale_price": 19500,
+    "short_description": "১৫ লিটার স্টেইনলেস স্টিল বালতি সহ আধুনিক দুধ দোহন মেশিন।",
+    "description": "১৫ লিটার স্টেইনলেস স্টিল বালতি সহ আধুনিক দুধ দোহন মেশিন। মাঝারি ও বড় খামারের জন্য উপযুক্ত।",
+    "images": [{ "src": "https://api.smartagrosource.com/wp-content/uploads/2026/10/Milking_15L.png" }],
+    "categories": [{ "id": 3, "name": "ডেইরি ইকুইপমেন্ট" }],
+    "meta_data": [
+      { "key": "youtube_video_url", "value": "" },
+      { "key": "display_section", "value": "both" }
+    ],
+    "display_section": "both",
+    "is_popular": true,
+    "delivery_charge": 0,
+    "stock_status": "instock",
+    "stock_quantity": 8
+  },
+  {
+    "id": 6,
+    "name": "১০ লিটার দুধ দোহন মেশিন (স্ট্যান্ড সহ) || 10-liter milking machine (with stand)",
+    "slug": "10-liter-milking-machine-with-stand",
+    "regular_price": 17500,
+    "price": 17500,
+    "sale_price": 17000,
+    "short_description": "১০ লিটার বালতি ও স্ট্যান্ড সহ শক্তিশালী দুধ দোহন মেশিন।",
+    "description": "১০ লিটার বালতি ও স্ট্যান্ড সহ শক্তিশালী দুধ দোহন মেশিন। দ্রুত ও নিরাপদে দুধ দোহনের আধুনিক প্রযুক্তি।",
+    "images": [{ "src": "https://api.smartagrosource.com/wp-content/uploads/2026/10/Milking_10L.png" }],
+    "categories": [{ "id": 3, "name": "ডেইরি ইকুইপমেন্ট" }],
+    "meta_data": [
+      { "key": "youtube_video_url", "value": "" },
+      { "key": "display_section", "value": "both" }
+    ],
+    "display_section": "both",
+    "is_popular": true,
+    "delivery_charge": 0,
+    "stock_status": "instock",
+    "stock_quantity": 12
+  },
+  {
+    "id": 5,
+    "name": "৩ লিটার দুধ দোহন মেশিন || 3 Liter Manual Cow Milking Machine",
+    "slug": "3-liter-manual-cow-milking-machine",
+    "regular_price": 5000,
+    "price": 5000,
+    "sale_price": 4500,
+    "short_description": "৩ লিটার ম্যানুয়াল মিল্কিং মেশিন। ঘরোয়া গাভী পালনের জন্য সেরা।",
+    "description": "৩ লিটার ম্যানুয়াল মিল্কিং মেশিন। ঘরোয়া গাভী পালনের জন্য সেরা। বিদ্যুৎ ছাড়া সহজেই পরিচালনা করা যায়।",
+    "images": [{ "src": "https://api.smartagrosource.com/wp-content/uploads/2026/10/Milking_3L.png" }],
+    "categories": [{ "id": 3, "name": "ডেইরি ইকুইপমেন্ট" }],
+    "meta_data": [
+      { "key": "youtube_video_url", "value": "" },
+      { "key": "display_section", "value": "both" }
+    ],
+    "display_section": "both",
+    "is_popular": true,
+    "delivery_charge": 0,
+    "stock_status": "instock",
+    "stock_quantity": 20
+  },
+  {
+    "id": 4,
+    "name": "বাছুরকে দুধ খাওয়ানোর  ফিডার || High quality Food grade Cow Feeder",
+    "slug": "high-quality-food-grade-cow-feeder",
+    "regular_price": 450,
+    "price": 450,
+    "sale_price": 380,
+    "short_description": "উন্নত মানের ফুডগ্রেড প্লাস্টিকের বাছুরের দুধের ফিডার।",
+    "description": "উন্নত মানের ফুডগ্রেড প্লাস্টিকের বাছুরের দুধের ফিডার। বাছুরকে সহজে স্বাস্থ্যকর উপায়ে দুধ খাওয়াতে সহায়ক।",
+    "images": [{ "src": "https://api.smartagrosource.com/wp-content/uploads/2026/07/feeder.jpg" }],
+    "categories": [{ "id": 3, "name": "ডেইরি ইকুইপমেন্ট" }],
+    "meta_data": [
+      { "key": "youtube_video_url", "value": "" },
+      { "key": "display_section", "value": "both" }
+    ],
+    "display_section": "both",
+    "is_popular": true,
+    "delivery_charge": 0,
+    "stock_status": "instock",
+    "stock_quantity": 50
+  }
+]

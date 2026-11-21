@@ -1,0 +1,303 @@
+"use client";
+
+import { useState } from 'react';
+import { 
+  ShoppingBag, 
+  Clock, 
+  CheckCircle2, 
+  XCircle, 
+  Search, 
+  Filter, 
+  ChevronDown,
+  MoreHorizontal,
+  Download,
+  Package,
+  Trash2
+} from 'lucide-react';
+
+export default function DashboardClient({ stats, initialOrders }) {
+  const [activeFilter, setActiveFilter] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Normalize WooCommerce status to match the filters used in the UI
+  const mapStatusToFilter = (status) => {
+    if (status === 'completed') return 'approved';
+    if (status === 'cancelled' || status === 'refunded' || status === 'failed') return 'rejected';
+    return 'pending';
+  };
+
+  const filteredOrders = initialOrders.filter(p => {
+    const pStatus = mapStatusToFilter(p.status);
+    const matchesFilter = activeFilter === 'All' || pStatus === activeFilter.toLowerCase();
+    
+    const searchLower = (searchQuery || '').toLowerCase().trim();
+    if (!searchLower) return matchesFilter;
+
+    const customerName = `${p.billing?.first_name || ''} ${p.billing?.last_name || ''}`.toLowerCase();
+    const customerPhone = (p.billing?.phone || '').toString().toLowerCase();
+    const customerEmail = (p.billing?.email || '').toLowerCase();
+    const hasProductMatch = p.line_items?.some(item => (item.name || '').toLowerCase().includes(searchLower));
+
+    const matchesSearch = p.id.toString().includes(searchLower) || 
+                          customerName.includes(searchLower) || 
+                          customerPhone.includes(searchLower) ||
+                          customerEmail.includes(searchLower) ||
+                          hasProductMatch;
+                          
+    return matchesFilter && matchesSearch;
+  });
+
+  const totalOrders = stats.totalOrders;
+  const pendingCount = stats.pendingCount + stats.processingCount;
+  const approvedCount = stats.completedCount;
+  const rejectedCount = totalOrders - (pendingCount + approvedCount);
+
+  const filters = ['All', 'Pending', 'Approved', 'Rejected'];
+
+  const exportToCSV = () => {
+    if (!filteredOrders.length) {
+      alert('এক্সপোর্ট করার মতো কোনো অর্ডার পাওয়া যায়নি।');
+      return;
+    }
+    const headers = ['Order ID', 'Date', 'Customer Name', 'Phone', 'Email', 'Items', 'Total (BDT)', 'Payment Method', 'Status'];
+    const rows = filteredOrders.map(order => [
+      order.id,
+      `"${new Date(order.date_created).toLocaleDateString('en-US')}"`,
+      `"${(`${order.billing?.first_name || ''} ${order.billing?.last_name || ''}`).trim().replace(/"/g, '""')}"`,
+      `"${(order.billing?.phone || '').toString().replace(/"/g, '""')}"`,
+      `"${(order.billing?.email || '').replace(/"/g, '""')}"`,
+      `"${(order.line_items || []).map(i => `${i.name} (x${i.quantity})`).join(', ').replace(/"/g, '""')}"`,
+      order.total,
+      `"${(order.payment_method_title || order.payment_method || '').replace(/"/g, '""')}"`,
+      `"${order.status}"`
+    ]);
+    const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `smart-agro-dashboard-orders-${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  return (
+    <div className="p-4 lg:p-8 max-w-[1600px] mx-auto">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-1">Dashboard</h1>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">Track status, update progress & manage transactions</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={exportToCSV}
+            className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors shadow-sm cursor-pointer"
+            title="Export filtered orders to CSV"
+          >
+            <Download className="w-4 h-4" />
+            Export
+          </button>
+        </div>
+      </div>
+
+      {/* Widgets */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div className="bg-white dark:bg-gray-900 border border-green-500/30 dark:border-green-500/40 rounded-2xl p-5 shadow-sm flex items-start gap-4">
+          <div className="w-12 h-12 rounded-xl bg-green-500/10 dark:bg-green-500/20 flex items-center justify-center text-green-600 dark:text-green-400 shrink-0">
+            <ShoppingBag className="w-6 h-6" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">৳{stats.totalSales.toLocaleString()}</h3>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Total Sales</p>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 shadow-sm flex items-start gap-4">
+          <div className="w-12 h-12 rounded-xl bg-yellow-500/10 dark:bg-yellow-500/20 flex items-center justify-center text-yellow-600 dark:text-yellow-400 shrink-0">
+            <Clock className="w-6 h-6" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{pendingCount}</h3>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Pending <span className="text-xs text-gray-400 dark:text-gray-500">• needs action</span></p>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 shadow-sm flex items-start gap-4">
+          <div className="w-12 h-12 rounded-xl bg-green-500/10 dark:bg-green-500/20 flex items-center justify-center text-green-600 dark:text-green-400 shrink-0">
+            <CheckCircle2 className="w-6 h-6" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{approvedCount}</h3>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Completed <span className="text-xs text-gray-400 dark:text-gray-500">• approved</span></p>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 shadow-sm flex items-start gap-4">
+          <div className="w-12 h-12 rounded-xl bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400 shrink-0">
+            <Package className="w-6 h-6" />
+          </div>
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{totalOrders}</h3>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">Total Orders</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Table Area */}
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden shadow-sm">
+        
+        {/* Table Controls */}
+        <div className="p-4 border-b border-gray-200 dark:border-gray-800 flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-gray-50/50 dark:bg-gray-800/40">
+          <div className="relative max-w-md w-full">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+            <input 
+              type="text" 
+              placeholder="Search order ID, phone or name..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl pl-9 pr-4 py-2.5 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500"
+            />
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 lg:gap-4">
+            <div className="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-xl border border-gray-200 dark:border-gray-700 overflow-x-auto">
+              {filters.map(filter => {
+                const count = filter === 'All' ? totalOrders : 
+                              filter === 'Pending' ? pendingCount : 
+                              filter === 'Approved' ? approvedCount : rejectedCount;
+                return (
+                  <button 
+                    key={filter}
+                    onClick={() => setActiveFilter(filter)}
+                    className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+                      activeFilter === filter 
+                        ? 'bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 shadow-sm border border-gray-200 dark:border-gray-700' 
+                        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                    }`}
+                  >
+                    {filter}
+                    <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                      activeFilter === filter ? 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                    }`}>{count}</span>
+                  </button>
+                )
+              })}
+            </div>
+            
+            <button className="flex items-center gap-2 px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/60 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors shadow-sm">
+              <Filter className="w-4 h-4" />
+              Filters
+            </button>
+          </div>
+        </div>
+
+        {/* Table */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse min-w-[800px]">
+            <thead>
+              <tr className="border-b border-gray-200 dark:border-gray-800 text-[11px] uppercase tracking-wider text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-800/60">
+                <th className="px-6 py-4 font-semibold">Order Details</th>
+                <th className="px-6 py-4 font-semibold">Customer</th>
+                <th className="px-6 py-4 font-semibold">Items</th>
+                <th className="px-6 py-4 font-semibold">Payment</th>
+                <th className="px-6 py-4 font-semibold">Status</th>
+                <th className="px-6 py-4 font-semibold text-right">Total</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100 dark:divide-gray-800 bg-white dark:bg-gray-900">
+              {filteredOrders.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
+                    No orders found matching your criteria.
+                  </td>
+                </tr>
+              ) : (
+                filteredOrders.map((payment) => {
+                  const mappedStatus = mapStatusToFilter(payment.status);
+                  const isPending = mappedStatus === 'pending';
+                  const isApproved = mappedStatus === 'approved';
+                  
+                  return (
+                    <tr key={payment.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
+                      {/* Order */}
+                      <td className="px-6 py-4">
+                        <div className="flex flex-col">
+                          <span className="font-bold text-gray-900 dark:text-gray-100">
+                            #{payment.id}
+                          </span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            {new Date(payment.date_created).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                          </span>
+                        </div>
+                      </td>
+                      
+                      {/* Customer */}
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-green-500/10 dark:bg-green-500/20 flex items-center justify-center text-green-600 dark:text-green-400 text-xs font-bold shrink-0">
+                            {payment.billing?.first_name?.substring(0, 1) || 'C'}
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="font-medium text-gray-900 dark:text-gray-100">{payment.billing?.first_name} {payment.billing?.last_name}</span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400">{payment.billing?.phone}</span>
+                          </div>
+                        </div>
+                      </td>
+
+                      {/* Items */}
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center shrink-0">
+                            <Package className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="font-medium text-gray-900 dark:text-gray-100 truncate max-w-[150px]">
+                              {payment.line_items?.[0]?.name || 'Unknown Product'}
+                            </span>
+                            {payment.line_items?.length > 1 && (
+                              <span className="text-xs text-green-600 dark:text-green-400 font-medium">+{payment.line_items.length - 1} more items</span>
+                            )}
+                          </div>
+                        </div>
+                      </td>
+
+                      {/* Payment */}
+                      <td className="px-6 py-4">
+                        <div className="flex flex-col">
+                          <span className="text-sm text-gray-700 dark:text-gray-300 capitalize">
+                            {payment.payment_method_title || payment.payment_method}
+                          </span>
+                        </div>
+                      </td>
+
+                      {/* Status */}
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border
+                          ${isPending 
+                            ? 'bg-yellow-50 dark:bg-yellow-950/40 text-yellow-700 dark:text-yellow-400 border-yellow-200 dark:border-yellow-800/50' 
+                            : isApproved 
+                              ? 'bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-400 border-green-200 dark:border-green-800/50' 
+                              : 'bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800/50'}`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${isPending ? 'bg-yellow-500' : isApproved ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                          <span className="capitalize">{payment.status}</span>
+                        </span>
+                      </td>
+
+                      {/* Total */}
+                      <td className="px-6 py-4 text-right">
+                        <span className="font-bold text-gray-900 dark:text-gray-100">৳{payment.total}</span>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}

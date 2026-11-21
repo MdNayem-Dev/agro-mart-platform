@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// ----------------------------------------------------
+// 1. Admin Authentication Model
+// ----------------------------------------------------
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique @db.VarChar(100)
+  email     String   @unique @db.VarChar(191)
+  password  String   @db.VarChar(255) // Hashed password
+  name      String?  @db.VarChar(150)
+  role      String   @default("admin") @db.VarChar(50)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+// ----------------------------------------------------
+// 2. Category Model
+// ----------------------------------------------------
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(191)
+  slug      String    @unique @db.VarChar(191)
+  imageUrl  String?   @db.Text @map("image_url")
+  bannerUrl String?   @db.Text @map("banner_url")
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+
+  // Relationships
+  products  Product[]
+
+  @@map("categories")
+}
+
+// ----------------------------------------------------
+// 3. Product Model
+// ----------------------------------------------------
+model Product {
+  id               Int         @id @default(autoincrement())
+  name             String      @db.VarChar(255)
+  slug             String      @unique @db.VarChar(255)
+  regularPrice     Decimal     @db.Decimal(10, 2) @map("regular_price")
+  salePrice        Decimal?    @db.Decimal(10, 2) @map("sale_price")
+  deliveryCharge   Decimal?    @default(0.00) @db.Decimal(10, 2) @map("delivery_charge")
+  stockStatus      String      @default("instock") @db.VarChar(50) @map("stock_status")
+  stockQuantity    Int?        @default(0) @map("stock_quantity")
+  shortDescription String?     @db.Text @map("short_description")
+  fullDescription  String?     @db.LongText @map("full_description")
+  youtubeUrl       String?     @db.VarChar(500) @map("youtube_url")
+  imageUrl         String?     @db.Text @map("image_url")
+  galleryImages    String?     @db.LongText @map("gallery_images")
+  categoryId       Int?        @map("category_id")
+  isPopular        Boolean     @default(false) @map("is_popular")
+  displaySection   String      @default("both") @map("display_section")
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+
+  // Relationships
+  category         Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  orderItems       OrderItem[]
+
+  @@index([categoryId])
+  @@map("products")
+}
+
+// ----------------------------------------------------
+// 4. Order & Order Items Model
+// ----------------------------------------------------
+model Order {
+  id            Int         @id @default(autoincrement())
+  customerName  String      @db.VarChar(150) @map("customer_name")
+  phone         String      @db.VarChar(50)
+  address       String      @db.Text
+  note          String?     @db.Text
+  
+  subtotal      Decimal     @default(0.00) @db.Decimal(10, 2)
+  shippingCost  Decimal     @default(0.00) @db.Decimal(10, 2) @map("shipping_cost")
+  totalAmount   Decimal     @db.Decimal(10, 2) @map("total_amount")
+  
+  paymentMethod String      @default("cod") @db.VarChar(50) @map("payment_method")
+  status        String      @default("pending") @db.VarChar(50)
+  
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+
+  // Relationships
+  items         OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  orderId   Int      @map("order_id")
+  productId Int?     @map("product_id")
+  name      String   @db.VarChar(255)
+  price     Decimal  @db.Decimal(10, 2)
+  quantity  Int      @default(1)
+  total     Decimal  @db.Decimal(10, 2)
+
+  // Relationships
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+
+  @@index([orderId])
+  @@index([productId])
+  @@map("order_items")
+}
+
+// ----------------------------------------------------
+// 5. Settings Model
+// ----------------------------------------------------
+model Setting {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique @db.VarChar(100)
+  value     String   @db.LongText
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("settings")
+}
+
+// ----------------------------------------------------
+// 6. Visitor Analytics Model
+// ----------------------------------------------------
+model VisitorLog {
+  id          Int      @id @default(autoincrement())
+  sessionId   String   @db.VarChar(100) @map("session_id")
+  path        String   @db.VarChar(500)
+  title       String?  @db.VarChar(255)
+  referrer    String?  @db.VarChar(1000)
+  source      String   @default("Direct") @db.VarChar(100) // 'Facebook', 'Google', 'Direct', 'Instagram', 'YouTube', 'TikTok', 'WhatsApp', 'Other'
+  deviceType  String   @default("desktop") @db.VarChar(50) @map("device_type") // 'mobile', 'desktop', 'tablet'
+  browser     String?  @db.VarChar(100)
+  os          String?  @db.VarChar(100)
+  country     String?  @default("Bangladesh") @db.VarChar(100)
+  city        String?  @db.VarChar(100)
+  ipHash      String?  @db.VarChar(64) @map("ip_hash")
+  isBot       Boolean  @default(false) @map("is_bot")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@index([sessionId])
+  @@index([createdAt])
+  @@index([source])
+  @@index([deviceType])
+  @@index([city])
+  @@map("visitor_logs")
+}

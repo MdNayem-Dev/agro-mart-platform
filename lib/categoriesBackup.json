@@ -1,0 +1,92 @@
+[
+  {
+    "id": 3,
+    "name": "ডেইরি ইকুইপমেন্ট",
+    "slug": "দ-ধ-দ-হন-ম-শ-ন",
+    "description": "",
+    "image": { "src": "" },
+    "image_url": "",
+    "banner_url": "",
+    "count": 6
+  },
+  {
+    "id": 5,
+    "name": "মৎস্য সরঞ্জাম",
+    "slug": "মৎস-য-সরঞ-জ-ম",
+    "description": "",
+    "image": { "src": "" },
+    "image_url": "",
+    "banner_url": "",
+    "count": 1
+  },
+  {
+    "id": 7,
+    "name": "কৃষি যন্ত্রাংশ",
+    "slug": "ক-ষ-যন-ত-র-শ",
+    "description": "",
+    "image": { "src": "" },
+    "image_url": "",
+    "banner_url": "",
+    "count": 1
+  },
+  {
+    "id": 8,
+    "name": "বীজ",
+    "slug": "ব-জ-ও-ন-র-স-র",
+    "description": "",
+    "image": { "src": "" },
+    "image_url": "",
+    "banner_url": "",
+    "count": 0
+  },
+  {
+    "id": 9,
+    "name": "কৃষি মেশিনারিজ",
+    "slug": "ক-ষ-ম-শ-ন-র-জ",
+    "description": "",
+    "image": { "src": "" },
+    "image_url": "",
+    "banner_url": "",
+    "count": 0
+  },
+  {
+    "id": 10,
+    "name": "পোলট্রি ইকুইপমেন্ট",
+    "slug": "প-লট-র-ইক-ইপম-ন-ট",
+    "description": "",
+    "image": { "src": "" },
+    "image_url": "",
+    "banner_url": "",
+    "count": 0
+  },
+  {
+    "id": 11,
+    "name": "কৃষি হ্যান্ড টুলস",
+    "slug": "ক-ষ-হ-য-ন-ড-ট-লস",
+    "description": "",
+    "image": { "src": "" },
+    "image_url": "",
+    "banner_url": "",
+    "count": 0
+  },
+  {
+    "id": 12,
+    "name": "পশুখাদ্য ও পুষ্টি",
+    "slug": "পশ-খ-দ-য-ও-প-ষ-ট",
+    "description": "",
+    "image": { "src": "" },
+    "image_url": "",
+    "banner_url": "",
+    "count": 0
+  },
+  {
+    "id": 13,
+    "name": "সফল খামারি",
+    "slug": "সফল-খ-ম-র",
+    "description": "",
+    "image": { "src": "" },
+    "image_url": "",
+    "banner_url": "",
+    "count": 0
+  }
+]
